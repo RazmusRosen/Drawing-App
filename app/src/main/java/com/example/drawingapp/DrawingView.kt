@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.createBitmap
@@ -34,19 +35,23 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        val touchX = event?.x
-        val touchY = event?.y
+        if(event == null) {
+            return false
+        }
 
-        when(event?.action) {
+        val touchX = event.x
+        val touchY = event.y
+
+        when(event.action) {
             MotionEvent.ACTION_DOWN -> {
                 drawPath.color = color
-                drawPath.brushThickness = brushSize.toFloat()
+                drawPath.brushThickness = brushSize
                 drawPath.reset()
-                drawPath.moveTo(touchX!!, touchY!!)
+                drawPath.moveTo(touchX, touchY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawPath.lineTo(touchX!!, touchY!!)
+                drawPath.lineTo(touchX, touchY)
             }
 
             MotionEvent.ACTION_UP -> {
@@ -57,7 +62,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         invalidate()
         return true
 
-        return super.onTouchEvent(event)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -80,6 +84,15 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         canvasPaint = Paint(Paint.DITHER_FLAG)
         brushSize = 20.toFloat()
+    }
+
+    fun changeBrushSize(newSize: Float) {
+        brushSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            newSize,
+            resources.displayMetrics
+        )
+        drawPaint.strokeWidth = brushSize
     }
 
     internal inner class FingerPath(var color: Int, var brushThickness: Float) : Path() {
