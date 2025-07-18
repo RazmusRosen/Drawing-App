@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import androidx.core.graphics.createBitmap
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -25,6 +27,49 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         setupDrawing()
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        canvasBitmap = createBitmap(w, h)
+        canvas = Canvas(canvasBitmap)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val touchX = event?.x
+        val touchY = event?.y
+
+        when(event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                drawPath.color = color
+                drawPath.brushThickness = brushSize.toFloat()
+                drawPath.reset()
+                drawPath.moveTo(touchX!!, touchY!!)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                drawPath.lineTo(touchX!!, touchY!!)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                canvas.drawPath(drawPath, drawPaint)
+            }
+            else -> return false
+        }
+        invalidate()
+        return true
+
+        return super.onTouchEvent(event)
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        canvas.drawBitmap(canvasBitmap, 0f, 0f, drawPaint)
+        if(!drawPath.isEmpty) {
+            drawPaint.strokeWidth = drawPath.brushThickness
+            drawPaint.color = drawPath.color
+            canvas.drawPath(drawPath, drawPaint)
+        }
+    }
+
     private fun setupDrawing() {
         drawPaint = Paint()
         drawPath = FingerPath(color, brushSize)
@@ -32,10 +77,12 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         drawPaint.style = Paint.Style.STROKE
         drawPaint.strokeJoin = Paint.Join.ROUND
         drawPaint.strokeCap = Paint.Cap.ROUND
+
+        canvasPaint = Paint(Paint.DITHER_FLAG)
         brushSize = 20.toFloat()
     }
 
-    internal inner class FingerPath(val color: Int, val brushThickness: Float) : Path() {
+    internal inner class FingerPath(var color: Int, var brushThickness: Float) : Path() {
 
     }
 }
