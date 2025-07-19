@@ -14,14 +14,126 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/constraint_layout" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_l2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/gallery_button"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/purple_button"
+            android:src="@drawable/purple_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/red_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/red_button"
+            android:src="@drawable/red_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/green_button"
+            app:layout_constraintStart_toEndOf="@id/purple_button" />
+
+        <ImageButton
+            android:id="@+id/green_button"
+            android:src="@drawable/green_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/blue_button"
+            app:layout_constraintStart_toEndOf="@id/red_button" />
+
+        <ImageButton
+            android:id="@+id/blue_button"
+            android:src="@drawable/blue_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/orange_button"
+            app:layout_constraintStart_toEndOf="@id/green_button" />
+
+        <ImageButton
+            android:id="@+id/orange_button"
+            android:src="@drawable/orange_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/blue_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/brush_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/drawing_view"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/brush"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/save_button" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/save_button"
+        android:src="@drawable/save"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gallery_button"
+        app:layout_constraintStart_toEndOf="@id/brush_button"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/gallery_button"
+        android:src="@drawable/gallery"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/undo_button"
+        app:layout_constraintStart_toEndOf="@id/save_button"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/undo_button"
+        android:src="@drawable/undo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/color_picker_button"
+        app:layout_constraintStart_toEndOf="@id/gallery_button"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/color_picker_button"
+        android:src="@drawable/color_picker"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/undo_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
